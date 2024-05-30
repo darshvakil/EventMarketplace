@@ -1,0 +1,181 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background-color: #e84a5f;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    border: solid grey 2px;
+}
+
+
+header h1 {
+    font-size: 36px;
+}
+
+header p {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.hero-image {
+    background-image: url('/css/food-festival-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 600px;
+    filter: blur(0px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: black;
+    border: solid grey 2px;
+}
+
+.hero-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-text h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.hero-text p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #e84a5f;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+
+.event-info {
+    background-color: bisque;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.event-info h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.event-info p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.event-info h3 {
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    text-align: center;
+    text-align: center;
+    background-color: lightgrey;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+    text-align: center;
+
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    text-align: center;
+
+}
+
+nav ul li a:hover {
+    color: #e84a5f;
+}
+
+/* Footer styles */footer {
+    text-align: center;
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+}
+
+footer p {
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 28px;
+    }
+
+    header p {
+        font-size: 16px;
+    }
+
+    .hero-image {
+        height: 400px;
+    }
+
+    .hero-text h2 {
+        font-size: 28px;
+    }
+
+    .hero-text p {
+        font-size: 16px;
+    }
+
+    .event-info h2 {
+        font-size: 20px;
+    }
+
+    .event-info p {
+        font-size: 16px;
+    }
+
+    .event-info h3 {
+        font-size: 18px;
+    }
+
+    nav ul {
+        margin-top: 10px;
+    }
+
+    nav ul li {
+        margin-right: 10px;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+    }
+
+    footer p {
+        font-size: 16px;
+    }
+}

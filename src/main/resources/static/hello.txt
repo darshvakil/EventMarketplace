@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+    <title>View Drinks</title>
+</head>
+<body>
+    <h1>Drink List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Shirt Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="shirt : ${shirts}">
+                <td th:text="${shirt.ID}"></td>
+                <td th:text="${shirt.name}"></td>
+                <td th:text="${shirt.price}"></td>
+                <td th:text="${shirt.quantity}"></td> 
+                <td><a href="" th:href="@{/purchase/{id}(id=${shirt.ID})}">PURCHASE</a></td>
+				<td><a href="" th:href="@{/delete/{id}(id=${shirt.ID})}">DELETE</a></td>
+                        
+                
+                
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+package ca.sheridancollege.vakild.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import ca.sheridancollege.vakild.bean.Shirt;
+import ca.sheridancollege.vakild.repositories.ShirtDatabase;
+
+@Controller
+public class ShirtController {
+	
+	@Autowired
+	private ShirtDatabase shirtDb;
+
+    @GetMapping("/")
+    public String root(Model model) {
+        return "root.html";
+    }
+    
+    @GetMapping("/add")
+    public String addShirt(Model model) {
+		model.addAttribute("shirt", new Shirt());
+        return "add.html";
+    }
+    
+    @GetMapping("/view")
+    public String viewShirt(Model model) {
+        List<Shirt> shirts = shirtDb.getShirts(); 
+        model.addAttribute("shirt", shirts); 
+        return "view.html"; 
+    }
+    
+    @GetMapping("/addshirt")
+    public String addHat(Shirt shirt) {
+    	shirtDb.addShirt(shirt);
+    	return "add.html";
+    }
+}
+
+package ca.sheridancollege.vakild.repositories;
+
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+import ca.sheridancollege.vakild.bean.Shirt;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+@Repository
+public class ShirtDatabase {
+
+    private final NamedParameterJdbcTemplate jdbc;
+
+    public ShirtDatabase(NamedParameterJdbcTemplate jdbc) {
+        this.jdbc = jdbc;
+    }
+
+    public void addShirt(Shirt shirt) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        String query = "INSERT INTO shirts (ID, name, price, quantity) " +
+                "VALUES (:id, :na, :pr, :qu)";
+        parameters.addValue("id", shirt.getID());
+        parameters.addValue("na", shirt.getName());
+        parameters.addValue("pr", shirt.getPrice());
+        parameters.addValue("qu", shirt.getQuantity());
+
+        jdbc.update(query, parameters);
+    }
+
+    public ArrayList<Shirt> getShirts() {
+        ArrayList<Shirt> shirts = new ArrayList<Shirt>();
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        String query = "SELECT * FROM shirts";
+        List<Map<String, Object>> rows = jdbc.queryForList(query, parameters);
+        for (Map<String, Object> row : rows) {
+            Shirt s = new Shirt();
+            s.setID((int) row.get("ID"));
+            s.setName((String) row.get("Name"));
+            s.setPrice((double) row.get("Price"));
+            s.setQuantity((int) row.get("Quantity"));
+            shirts.add(s);
+        }
+        return shirts;
+    }
+}
